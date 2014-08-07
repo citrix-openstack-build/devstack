@@ -110,6 +110,18 @@ if [[ ${DISTRO} =~ (precise) ]]; then
     fi
 fi
 
+# Ubuntu 13.10
+# ------------
+
+# See bug #1242992
+# SecretService wants to connect to DBUS.
+if [[ ${DISTRO} =~ (saucy) ]]; then
+    mkdir -p ~/.local/share/python_keyring/
+    cat > ~/.local/share/python_keyring/keyringrc.cfg << EOF
+[backend]
+default-keyring=keyring.backends.file.PlaintextKeyring
+EOF
+fi
 
 if is_fedora; then
     # Disable selinux to avoid configuring to allow Apache access
